@@ -4,78 +4,46 @@ import winconfig
 from PIL import ImageTk, Image
 
 
-mas = np.array(
-	[[0, 0, 1, 0, 0, 0, 0, 0], 
-	[0, 0, 0, 0, 0, 1, 0, 0], 
-	[0, 0, 0, 1, 0, 0, 0, 1], 
-	[0, 0, 0, 0, 0, 0, 1, 0], 
-	[0, 0, 1, 0, 0, 0, 1, 0], 
-	[0, 0, 0, 0, 0, 0, 1, 0], 
-	[0, 0, 0, 0, 1, 0, 0, 0], 
-	[0, 1, 0, 0, 0, 1, 0, 1]])
+mas = np.zeros((25, 25))
 
-dig_matrix = np.array(
-   [[4, 1, 0, 1, 1, 1, 1, 0], 
-	[5, 1, 2, 2, 1, 0, 2, 1], 
-	[6, 0, 0, 0, 1, 2, 3, 1], 
-	[7, 1, 2, 2, 0, 2, 0, 3], 
-	[8, 1, 0, 1, 0, 3, 0, 3], 
-	[0, 1, 1, 2, 1, 3, 0, 2], 
-	[1, 1, 1, 1, 0, 3, 3, 2], 
-	[1, 1, 1, 1, 2, 0, 2, 0]])
+dig_matrix = np.zeros((25, 25))
 
-open_cell_matrix = np.array(
-	[[1, 0, 1, 0, 0, 1, 0, 0], 
-	[1, 0, 0, 0, 0, 0, 0, 0], 
-	[1, 0, 0, 0, 0, 1, 0, 0], 
-	[1, 0, 0, 0, 1, 1, 0, 0], 
-	[1, 0, 0, 0, 1, 1, 0, 0], 
-	[0, 0, 0, 0, 0, 1, 0, 0], 
-	[0, 0, 0, 0, 0, 0, 0, 0], 
-	[0, 0, 0, 0, 0, 0, 0, 0]])
+open_cell_matrix = np.zeros((25, 25))
 
 
-
-def screen_init(cfg):
-	""" Инициализация окна """
-	pygame.init()
-	pygame.mixer.init()  # Voice
-
-	screen = pygame.display.set_mode(
-		(cfg.cell_size * cfg.cell_quantity + 1,
-		cfg.cell_size * cfg.cell_quantity + cfg.head_hight + 1))
-
+def timer(cfg):
+	""" Счет секунд """
+	ticks = pygame.time.get_ticks()
+	seconds = int(ticks / 1000)
+	timer_time = 's: {seconds:03d}'.format(seconds=seconds)
 	
-	pygame.display.set_caption(cfg.title)
-
-	return screen
-
+	return timer_time 
+	
 
 
 
-
-def game_field_drawing(cfg, screen, pics):
+def game_field_drawing(cfg, pics):
 	""" Заливка окна + наложение сетки """
 
 
-	screen.fill((150, 150, 150)) # Цвет бэкграунда
+	cfg.screen.fill((150, 150, 150)) # Цвет бэкграунда
 
 
 	for j in range(cfg.cell_quantity):
 		for i in range(cfg.cell_quantity):
 
 			if (open_cell_matrix[i][j]) == 0:
-				screen.blit(
+				cfg.screen.blit(
 					pics.cell_image, 
 					(i*cfg.cell_size, j*cfg.cell_size + cfg.head_hight))
 
 			elif mas[i][j]:
-				screen.blit(
+				cfg.screen.blit(
 					pics.mine_image, 
 					(i*cfg.cell_size, j*cfg.cell_size + cfg.head_hight))
 
 			elif ((dig_matrix[i][j] > 0) and (dig_matrix[i][j] < 9)):
-				screen.blit(
+				cfg.screen.blit(
 					pics.digit_images_list[dig_matrix[i][j]], 
 					(i*cfg.cell_size, j*cfg.cell_size + cfg.head_hight))
 
@@ -84,7 +52,7 @@ def game_field_drawing(cfg, screen, pics):
 		
 		# Columns drawing
 		pygame.draw.line(
-			screen,
+			cfg.screen,
 			(0, 0, 0),
 			[0, cfg.cell_size*i + cfg.head_hight], 
 			[cfg.cell_size * cfg.cell_quantity, 
@@ -93,7 +61,7 @@ def game_field_drawing(cfg, screen, pics):
 
 		# Rows drawing
 		pygame.draw.line(
-			screen, 
+			cfg.screen, 
 			(0, 0, 0),
 
 			[cfg.cell_size*i, 
@@ -103,11 +71,19 @@ def game_field_drawing(cfg, screen, pics):
 				cfg.cell_size*cfg.cell_quantity + cfg.head_hight], 
 			1)
 
+	#Вставка таймера
+	timer_time = timer(cfg)
+
+	cfg.font.render_to(cfg.screen, 
+		(cfg.cell_size * cfg.cell_quantity - 120, cfg.head_hight / 2 + 10), 
+		timer_time, 
+		(138, 43, 226))
 
 
 
 
-def screen_interaction(cfg, screen):
+
+def screen_interaction(cfg):
 	""" Обработка событий + вызов заливки """
 
 	# Подгрузка изображений
@@ -134,7 +110,7 @@ def screen_interaction(cfg, screen):
 				game_running = False
 			
 		# Зарисовка экрана
-		game_field_drawing(cfg, screen, pics)
+		game_field_drawing(cfg, pics)
 		pygame.display.flip()
 
 
@@ -142,8 +118,7 @@ def screen_interaction(cfg, screen):
 
 def main():
 	cfg = winconfig.WinConfig()
-	screen = screen_init(cfg)
-	screen_interaction(cfg, screen)
+	screen_interaction(cfg)
 
 
 

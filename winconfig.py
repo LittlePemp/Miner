@@ -1,5 +1,5 @@
 import pygame
-
+import pygame.freetype
 
 
 def img_load(cfg):
@@ -32,15 +32,35 @@ def img_load(cfg):
 		digit_images_list)
 
 
+def screen_init(cfg):
+	""" Инициализация окна """
+	pygame.init()
+	pygame.mixer.init()  # Voice
+
+	screen = pygame.display.set_mode(
+		(cfg.cell_size * cfg.cell_quantity + 1,
+		cfg.cell_size * cfg.cell_quantity + cfg.head_hight + 1))
+
+	
+	pygame.display.set_caption(cfg.title)
+
+	return screen
+
+
+
 
 class WinConfig():
 	"""docstring for WinConfig"""
 	def __init__(self):
 		self.title = "Miner"
-		self.cell_quantity = 8
-		self.cell_size = 50
+		self.cell_quantity = 25
+		self.cell_size = 30
 		self.head_hight = 75
 		self.fps = 60
+		self.screen = screen_init(self)
+
+		self.font = pygame.freetype.SysFont(None, 34)
+		self.font.origin=True
 
 
 
