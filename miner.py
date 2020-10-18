@@ -107,10 +107,8 @@ def screen_interaction(cfg):
 				# Первый клик
 				if cfg.game_start:
 					cfg.game_start = False
-					try:
-						game_matrixes = mechanic.Mechanics(x, y, cfg.cell_quantity)
-					except:
-						cfg.game_start = True
+					
+					game_matrixes = mechanic.Mechanics(x, y, cfg.cell_quantity)
 				# Вызов фунции для обновления массива по кликам. Координата + left right button
 				else:
 					game_running = game_matrixes.game(x, y, "l" if event.button == 1 else "r")
