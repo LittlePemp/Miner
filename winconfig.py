@@ -60,8 +60,12 @@ class WinConfig():
 		self.screen = screen_init(self)
 		self.game_start = True
 
-		self.font = pygame.freetype.SysFont(None, 34)
-		self.font.origin = True
+		self.timer_font = pygame.freetype.SysFont(None, 34)
+		self.timer_font.origin = True
+		self.txt_font = pygame.freetype.SysFont(None, 26)
+		self.txt_font.origin = True
+
+		self.state_time = pygame.time.get_ticks()
 
 
 
