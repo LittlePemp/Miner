@@ -60,7 +60,7 @@ class WinConfig():
 		self.screen = screen_init(self)
 
 		self.font = pygame.freetype.SysFont(None, 34)
-		self.font.origin=True
+		self.font.origin = True
 
 
 
