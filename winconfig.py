@@ -53,11 +53,12 @@ class WinConfig():
 	"""docstring for WinConfig"""
 	def __init__(self):
 		self.title = "Miner"
-		self.cell_quantity = 25
+		self.cell_quantity = 12
 		self.cell_size = 30
 		self.head_hight = 75
 		self.fps = 60
 		self.screen = screen_init(self)
+		self.game_start = True
 
 		self.font = pygame.freetype.SysFont(None, 34)
 		self.font.origin = True

@@ -2,13 +2,8 @@ import numpy as np
 import pygame
 import winconfig
 from PIL import ImageTk, Image
+import mechanic
 
-
-mas = np.zeros((25, 25))
-
-dig_matrix = np.zeros((25, 25))
-
-open_cell_matrix = np.zeros((25, 25))
 
 
 def timer(cfg):
@@ -22,29 +17,33 @@ def timer(cfg):
 
 
 
-def game_field_drawing(cfg, pics):
+def game_field_drawing(cfg, pics, game_matrixes=None):
 	""" Заливка окна + наложение сетки """
 
 
-	cfg.screen.fill((150, 150, 150)) # Цвет бэкграунда
 
 
 	for j in range(cfg.cell_quantity):
 		for i in range(cfg.cell_quantity):
 
-			if (open_cell_matrix[i][j]) == 0:
+			if cfg.game_start:
 				cfg.screen.blit(
 					pics.cell_image, 
 					(i*cfg.cell_size, j*cfg.cell_size + cfg.head_hight))
-
-			elif mas[i][j]:
+			
+			elif (game_matrixes.clicked[i][j]) == 0:
+				cfg.screen.blit(
+					pics.cell_image, 
+					(i*cfg.cell_size, j*cfg.cell_size + cfg.head_hight))
+			
+			elif game_matrixes.mines[i][j]:
 				cfg.screen.blit(
 					pics.mine_image, 
 					(i*cfg.cell_size, j*cfg.cell_size + cfg.head_hight))
 
-			elif ((dig_matrix[i][j] > 0) and (dig_matrix[i][j] < 9)):
+			elif ((game_matrixes.neighbours[i][j] > 0)):
 				cfg.screen.blit(
-					pics.digit_images_list[dig_matrix[i][j]], 
+					pics.digit_images_list[int(game_matrixes.neighbours[i][j])], 
 					(i*cfg.cell_size, j*cfg.cell_size + cfg.head_hight))
 
 
@@ -71,13 +70,16 @@ def game_field_drawing(cfg, pics):
 				cfg.cell_size*cfg.cell_quantity + cfg.head_hight], 
 			1)
 
-	#Вставка таймера
-	timer_time = timer(cfg)
 
+
+#Вставка таймера
+def get_timer(cfg):
+	timer_time = timer(cfg)
+	cfg.screen.fill((150, 150, 150)) # Цвет бэкграунда
 	cfg.font.render_to(cfg.screen, 
 		(cfg.cell_size * cfg.cell_quantity - 120, cfg.head_hight / 2 + 10), 
 		timer_time, 
-		(138, 43, 226))
+		(18, 83, 255))
 
 
 
@@ -102,17 +104,32 @@ def screen_interaction(cfg):
 				x //= cfg.cell_size
 				y = (y - cfg.head_hight) // cfg.cell_size
 
-				# Координата + left right button
-				print(x, y, "l" if event.button == 1 else "r") 
+				# Первый клик
+				if cfg.game_start:
+					cfg.game_start = False
+					try:
+						game_matrixes = mechanic.Mechanics(x, y, cfg.cell_quantity)
+					except:
+						cfg.game_start = True
+				# Вызов фунции для обновления массива по кликам. Координата + left right button
+				else:
+					game_running = game_matrixes.game(x, y, "l" if event.button == 1 else "r")
+
+
 
 			# Выход из игры
 			if (event.type == pygame.KEYDOWN) or (event.type == pygame.QUIT):
 				game_running = False
 			
-		# Зарисовка экрана
-		game_field_drawing(cfg, pics)
-		pygame.display.flip()
+		# Зарисовка экрана с таймерм, если нет нажатий
+		get_timer(cfg)
 
+		if cfg.game_start:
+			game_field_drawing(cfg, pics)
+		if cfg.game_start == False:	
+			game_field_drawing(cfg, pics, game_matrixes)
+
+		pygame.display.flip()
 
 
 
