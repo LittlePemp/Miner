@@ -127,9 +127,11 @@ def screen_interaction(cfg):
 				
 				# Restart
 				if (event.key == pygame.K_SPACE):
-					main()
+					cfg.round_restart()
 
-				game_running = False
+
+				else:
+					game_running = False
 
 
 
@@ -147,6 +149,10 @@ def screen_interaction(cfg):
 
 			pygame.display.flip()
 
+
+
+def game_loop():
+	pass
 
 
 def main():

@@ -68,6 +68,12 @@ class WinConfig():
 		self.state_time = pygame.time.get_ticks()
 
 
+	def round_restart(self):
+		self.game_start = True
+		self.state_time = pygame.time.get_ticks()
+
+
+
 
 class Image():
 	def __init__(self, cfg):
