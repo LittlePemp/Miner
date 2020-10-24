@@ -18,7 +18,7 @@ def timer(cfg):
 #Вставка таймера
 def get_timer(cfg):
 	timer_time = timer(cfg)
-	cfg.screen.fill((150, 150, 150)) # Цвет бэкграунда
+	cfg.screen.fill((150, 150, 150)) # Цвет бэкграунда всего экрана
 	cfg.timer_font.render_to(cfg.screen, 
 		(cfg.cell_size * cfg.cell_quantity - 120, cfg.head_hight / 2 + 10), 
 		timer_time, 
@@ -124,7 +124,8 @@ def screen_interaction(cfg):
 						
 						game_matrixes = mechanic.Mechanics(x, y, cfg.cell_quantity)
 
-					# Вызов фунции для обновления массива по кликам. Координата + left right button
+					# Вызов фунции для обновления массива по кликам. 
+					# Координата + left right button
 					# Ячейка с флагом неактивна
 					elif ((x >= 0 or x < cfg.cell_quantity) and
 							(y >= 0 or y < cfg.cell_quantity) and
