@@ -18,6 +18,11 @@ def img_load(cfg):
 		cell_image, 
 		(cfg.cell_size, cfg.cell_size))
 
+	flag_image = pygame.image.load("sourse/img/flag.png").convert_alpha()
+	flag_image = pygame.transform.scale(
+		flag_image, 
+		(int(cfg.cell_size*0.7), int(cfg.cell_size*0.7)))
+
 
 	# Цикл для каждой цифры
 	for digit_image in range(1,9):
@@ -27,22 +32,25 @@ def img_load(cfg):
 			digit_images_list[digit_image], 
 			(cfg.cell_size, cfg.cell_size))
 
+
 	return (mine_image, 
 		cell_image, 
-		digit_images_list)
+		digit_images_list,
+		flag_image)
+
 
 
 def screen_init(cfg):
-	""" Инициализация окна """
+	""" Иницилизация окна """
 	pygame.init()
 	pygame.mixer.init()  # Voice
 
 	screen = pygame.display.set_mode(
 		(cfg.cell_size * cfg.cell_quantity + 1,
 		cfg.cell_size * cfg.cell_quantity + cfg.head_hight + 1))
-
 	
 	pygame.display.set_caption(cfg.title)
+
 
 	return screen
 
@@ -53,8 +61,8 @@ class WinConfig():
 	"""docstring for WinConfig"""
 	def __init__(self):
 		self.title = "Miner"
-		self.cell_quantity = 12
-		self.cell_size = 30
+		self.cell_quantity = 10
+		self.cell_size = 75
 		self.head_hight = 75
 		self.fps = 60
 		self.screen = screen_init(self)
@@ -77,4 +85,7 @@ class WinConfig():
 
 class Image():
 	def __init__(self, cfg):
-		self.mine_image, self.cell_image, self.digit_images_list = img_load(cfg)
+		(self.mine_image,
+		self.cell_image, 
+		self.digit_images_list,
+		self.flag_image) = img_load(cfg)

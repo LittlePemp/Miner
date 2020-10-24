@@ -33,7 +33,6 @@ def get_timer(cfg):
 	
 
 
-
 def game_field_drawing(cfg, pics, game_matrixes=None):
 	""" Заливка окна + наложение сетки """
 
@@ -44,12 +43,21 @@ def game_field_drawing(cfg, pics, game_matrixes=None):
 				cfg.screen.blit(
 					pics.cell_image, 
 					(i*cfg.cell_size, j*cfg.cell_size + cfg.head_hight))
-			
+				
+
 			elif (game_matrixes.clicked[i][j]) == 0:
 				cfg.screen.blit(
 					pics.cell_image, 
 					(i*cfg.cell_size, j*cfg.cell_size + cfg.head_hight))
-			
+				
+				# Флаги поверх закрытых ячеек
+				if (game_matrixes.flags[i][j] == 1):
+					cfg.screen.blit(
+						pics.flag_image, 
+						(i*cfg.cell_size + 0.15*cfg.cell_size, 
+						j*cfg.cell_size + cfg.head_hight + 0.15*cfg.cell_size))
+
+
 			elif game_matrixes.mines[i][j]:
 				cfg.screen.blit(
 					pics.mine_image, 
@@ -59,6 +67,7 @@ def game_field_drawing(cfg, pics, game_matrixes=None):
 				cfg.screen.blit(
 					pics.digit_images_list[int(game_matrixes.neighbours[i][j])], 
 					(i*cfg.cell_size, j*cfg.cell_size + cfg.head_hight))
+
 
 
 	for i in range(cfg.cell_quantity + 1):
@@ -83,8 +92,6 @@ def game_field_drawing(cfg, pics, game_matrixes=None):
 			[cfg.cell_size*i, 
 				cfg.cell_size*cfg.cell_quantity + cfg.head_hight], 
 			1)
-
-
 
 
 
@@ -118,7 +125,10 @@ def screen_interaction(cfg):
 						game_matrixes = mechanic.Mechanics(x, y, cfg.cell_quantity)
 
 					# Вызов фунции для обновления массива по кликам. Координата + left right button
-					else:
+					# Ячейка с флагом неактивна
+					elif ((x >= 0 or x < cfg.cell_quantity) and
+							(y >= 0 or y < cfg.cell_quantity) and
+							(game_matrixes.flags[x][y] != 1)):
 						game_matrixes.game(x, y, "l" if event.button == 1 else "r")
 
 
@@ -132,7 +142,6 @@ def screen_interaction(cfg):
 
 				else:
 					game_running = False
-
 
 
 		# Зарисовка экрана с таймерм, если нет нажатий
@@ -151,17 +160,9 @@ def screen_interaction(cfg):
 
 
 
-def game_loop():
-	pass
-
-
 def main():
-	# Завершенрие предыдущих сеансов при рестарте
-	pygame.quit()
-
 	cfg = winconfig.WinConfig()
 	screen_interaction(cfg)
-
 
 
 

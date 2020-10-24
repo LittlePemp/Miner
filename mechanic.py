@@ -71,11 +71,14 @@ class Mechanics():
 
 
         def flag_point(click_x, click_y):
-            '''Установка флага'''
+            '''Установка и снятие флага'''
             if button == "r":
                 if self.clicked[click_x][click_y] == 0:
                     self.flags[click_x][click_y] = 1
-            return self.flags
+
+                else:
+                    self.flags[click_x][click_y] = 1
+
 
         if self.side**2 - self.counter == self.mines_num:
             end_of_game = True
