@@ -72,9 +72,9 @@ class Mechanics():
 
         def flag_point(click_x, click_y):
             '''Установка и снятие флага'''
-            if button == "r":
-                if self.clicked[click_x][click_y] == 0:
-                    self.flags[click_x][click_y] = 1
+            if (button == "r") and (self.clicked[click_x][click_y] == 0):
+                if self.flags[click_x][click_y] == 1:
+                    self.flags[click_x][click_y] = 0
 
                 else:
                     self.flags[click_x][click_y] = 1

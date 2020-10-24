@@ -1,7 +1,6 @@
 import numpy as np
 import pygame
 import winconfig
-from PIL import ImageTk, Image
 import mechanic
 
 
@@ -111,6 +110,7 @@ def screen_interaction(cfg):
 			# Нажатие на ячейку
 			if (event.type == pygame.MOUSEBUTTONUP):
 				x, y = (pygame.mouse.get_pos())
+				click_button = "l" if event.button == 1 else "r"
 
 				# Область игрового поля
 				if (y > cfg.head_hight):
@@ -128,8 +128,9 @@ def screen_interaction(cfg):
 					# Ячейка с флагом неактивна
 					elif ((x >= 0 or x < cfg.cell_quantity) and
 							(y >= 0 or y < cfg.cell_quantity) and
-							(game_matrixes.flags[x][y] != 1)):
-						game_matrixes.game(x, y, "l" if event.button == 1 else "r")
+							((click_button == "r") or 
+							(game_matrixes.flags[x][y] != 1))):
+						game_matrixes.game(x, y, click_button)
 
 
 			# Выход из игры
