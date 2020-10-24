@@ -9,6 +9,7 @@ def field_generation(click_x, click_y, side):
 
     if side * click_x + click_y in mines_set:
         mines_set.remove(side * click_x + click_y)
+        mines_num -= 1
 
     mines = np.zeros((side, side))
     neighbours = np.zeros((side, side))
@@ -23,7 +24,7 @@ def field_generation(click_x, click_y, side):
                     if mines[mine_x + i][mine_y + j] != 1:
                         neighbours[mine_x + i][mine_y + j] += 1
 
-    return mines, neighbours, len(mines_set)
+    return mines, neighbours, mines_num
 
 
 class Mechanics():
@@ -35,6 +36,7 @@ class Mechanics():
         self.clicked[click_x][click_y] = 1
         self.side = side
         self.counter = 0
+        self.flags_count = 0
         #self.button = button
 
         # Открыте вокруг пустого при перво нажатии
@@ -92,11 +94,35 @@ class Mechanics():
         if (button == "r") and (self.clicked[click_x][click_y] == 0):
             if self.flags[click_x][click_y] == 1:
                 self.flags[click_x][click_y] = 0
+                self.flags_count -= 1
 
             else:
                 self.flags[click_x][click_y] = 1
+                self.flags_count += 1
+
+
+    def game_verdict(self):
+        check_counter = 0
+        mine_opened = 0
+        for i in range(self.side):
+            for j in range(self.side):
+                if ((self.mines[i][j] == 0) and
+                        (self.clicked[i][j] != self.mines[i][j])):
+                    check_counter += 1
+                if ((self.mines[i][j] == 1) and
+                        (self.clicked[i][j] == self.mines[i][j])):
+                    return "LOSER"
+
+
+        if (check_counter == self.side**2 - self.mines_num):
+            return "WINNER"
+
+        else:
+            return None
 
 
     def game(self, click_x, click_y, button="l"):
         self.clicked_arr(click_x,click_y, button)
         self.mine_or_flag(click_x, click_y, button)
+        
+        return self.game_verdict()

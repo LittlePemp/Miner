@@ -48,6 +48,12 @@ def game_field_drawing(cfg, pics, game_matrixes=None):
 				cfg.screen.blit(
 					pics.cell_image, 
 					(i*cfg.cell_size, j*cfg.cell_size + cfg.head_hight))
+
+				cfg.timer_font.render_to(cfg.screen, 
+										(cfg.cell_size * cfg.cell_quantity // 2 - cfg.cell_size // 2, 
+											cfg.head_hight // 2 + 10), 
+										str(game_matrixes.mines_num - game_matrixes.flags_count), 
+										(215, 43, 110))
 				
 				# Флаги поверх закрытых ячеек
 				if (game_matrixes.flags[i][j] == 1):
@@ -94,6 +100,36 @@ def game_field_drawing(cfg, pics, game_matrixes=None):
 
 
 
+def the_end(cfg):
+	"""Fill of the end"""
+	if cfg.game_verdict == "WINNER":
+		message = str("{}, {}".format(str(cfg.verdict_time // 1000), "YOU WIN"))
+		cfg.screen.fill((15, 220, 15)) # Цвет бэкграунда всего экрана
+		cfg.timer_font.render_to(cfg.screen, 
+		(cfg.cell_size * cfg.cell_quantity // 2 - len(message)//2 * 22, 
+			cfg.cell_size * cfg.cell_quantity // 2 - 36), 
+		message, 
+		(255, 255, 255))
+
+		#return False
+
+	elif cfg.game_verdict == "LOSER":
+		message = str("{}, {}".format(str(cfg.verdict_time // 1000), "YOU LOSE"))
+		cfg.screen.fill((220, 15, 15)) # Цвет бэкграунда всего экрана
+		cfg.timer_font.render_to(cfg.screen, 
+		(cfg.cell_size * cfg.cell_quantity // 2 - len(message)//2 * 22, 
+			cfg.cell_size * cfg.cell_quantity // 2 - 36), 
+		message, 
+		(255, 255, 255))
+
+		#return False
+
+
+
+
+
+
+
 def screen_interaction(cfg):
 	""" Обработка событий + вызов заливки """
 
@@ -102,6 +138,7 @@ def screen_interaction(cfg):
 
 	clock = pygame.time.Clock()
 	game_running = True
+	game_verdict = None
 	while game_running:
 		clock.tick(cfg.fps)
 
@@ -131,7 +168,8 @@ def screen_interaction(cfg):
 							(y >= 0 or y < cfg.cell_quantity) and
 							((click_button == "r") or 
 							(game_matrixes.flags[x][y] != 1))):
-						game_matrixes.game(x, y, click_button)
+						cfg.game_verdict = game_matrixes.game(x, y, click_button)
+						cfg.verdict_time = pygame.time.get_ticks() - cfg.state_time
 
 
 			# Выход из игры
@@ -157,6 +195,9 @@ def screen_interaction(cfg):
 			# Зарисовка после генерации полей
 			if cfg.game_start == False:	
 				game_field_drawing(cfg, pics, game_matrixes)
+
+				# Скрин окончания
+				the_end(cfg)
 
 			pygame.display.flip()
 

@@ -64,7 +64,7 @@ class WinConfig():
 	"""docstring for WinConfig"""
 	def __init__(self):
 		self.title = "Miner"
-		self.cell_quantity = 16
+		self.cell_quantity = 8
 		self.cell_size = 50
 		self.head_hight = 75
 		self.fps = 60
@@ -75,13 +75,17 @@ class WinConfig():
 		self.timer_font.origin = True
 		self.txt_font = pygame.freetype.SysFont(None, 26)
 		self.txt_font.origin = True
+		self.end_font = pygame.freetype.SysFont(None, 72)
+		self.end_font.origin = True
 
 		self.state_time = pygame.time.get_ticks()
-
+		self.game_verdict = None
+		self.verdict_time = 0
 
 	def round_restart(self):
 		self.game_start = True
 		self.state_time = pygame.time.get_ticks()
+		self.game_verdict = None
 
 
 
