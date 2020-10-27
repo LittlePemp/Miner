@@ -1,6 +1,4 @@
 --------------------------------------------------
-h2 **Загрузить необходимые библиотеки**:
-h6   ***pip install -r requirements.txt***
-h6   ***pip3 install -r requirements.txt***
-
-h3 Запуск игры в miner.py
+<h2> Загрузить необходимые библиотеки:</h2>
+<p>pip install -r requirements.txt\npip3 install -r requirements.txt</p>
+<h3> Запуск игры в miner.py</h3>
