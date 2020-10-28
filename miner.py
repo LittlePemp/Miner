@@ -119,7 +119,10 @@ def screen_interaction(cfg):
 
 					# Вызов фунции для обновления массива по кликам. Координата + left right button
 					else:
-						game_matrixes.game(x, y, "l" if event.button == 1 else "r")
+						if event.button == 1:
+							game_matrixes.clicked_arr(x, y)
+						else:
+							game_matrixes.flag_point(x, y)
 
 
 			# Выход из игры

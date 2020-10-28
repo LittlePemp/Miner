@@ -8,12 +8,12 @@ def img_load(cfg):
 	digit_images_list = [None, ] # Список изображений цифр, начиная с 1
 
 
-	mine_image = pygame.image.load("sourse/img/mine.png").convert_alpha()
+	mine_image = pygame.image.load("/Users/donatello/DDproject/sourse/img/mine.png").convert_alpha()
 	mine_image = pygame.transform.scale(
 		mine_image, 
 		(cfg.cell_size, cfg.cell_size))
 
-	cell_image = pygame.image.load("sourse/img/botton.png").convert_alpha()
+	cell_image = pygame.image.load("/Users/donatello/DDproject/sourse/img/botton.png").convert_alpha()
 	cell_image = pygame.transform.scale(
 		cell_image, 
 		(cfg.cell_size, cfg.cell_size))
@@ -22,7 +22,7 @@ def img_load(cfg):
 	# Цикл для каждой цифры
 	for digit_image in range(1,9):
 
-		digit_images_list.append(pygame.image.load(('sourse/img/{}.png'.format(str(digit_image)))).convert_alpha())
+		digit_images_list.append(pygame.image.load(('/Users/donatello/DDproject/sourse/img/{}.png'.format(str(digit_image)))).convert_alpha())
 		digit_images_list[digit_image] = pygame.transform.scale(
 			digit_images_list[digit_image], 
 			(cfg.cell_size, cfg.cell_size))
@@ -53,7 +53,7 @@ class WinConfig():
 	"""docstring for WinConfig"""
 	def __init__(self):
 		self.title = "Miner"
-		self.cell_quantity = 12
+		self.cell_quantity = 16
 		self.cell_size = 30
 		self.head_hight = 75
 		self.fps = 60

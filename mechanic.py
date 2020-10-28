@@ -32,54 +32,35 @@ class Mechanics():
         self.mines, self.neighbours, self.mines_num = field_generation(click_x,click_y,side)
         self.clicked = np.zeros((side, side))
         self.flags = np.zeros((side, side))
-        self.clicked[click_x][click_y] = 1
+        #self.clicked[click_x][click_y] = 1
         self.side = side
         self.counter = 0
-        #self.button = button
+        self.end_of_game = True
+        self.clicked_arr(click_x,click_y)
+
+
+    def clicked_arr(self, click_x, click_y):
+        '''Проверка открытия клетки'''
+        if self.mines[click_x][click_y] == 1:
+            self.end_of_game = False
+            self.clicked[click_x][click_y] = 1
+        else:
+            if self.clicked[click_x][click_y] == 0:
+                self.clicked[click_x][click_y] += 1
+                self.counter += 1
+                if self.neighbours[click_x][click_y] == 0:
+                    for i in range(-1, 2):
+                        for j in range(-1, 2):
+                            if (click_x + i >= 0) and (click_x + i < self.side) and (click_y + j >= 0) and (
+                                    click_y + j < self.side):
+                                self.clicked_arr(click_x + i, click_y + j)
+        if self.side ** 2 - self.counter == self.mines_num:
+            self.end_of_game = False
 
 
 
+    def flag_point(self, click_x, click_y):
+        '''Установка флага'''
+        if self.clicked[click_x][click_y] == 0:
+            self.flags[click_x][click_y] = 1
 
-
-    def game(self, click_x, click_y, button):
-
-        def clicked_arr(click_x, click_y):
-            '''Проверка открытия клетки'''
-            if button == "l":
-                if self.clicked[click_x][click_y] == 1:
-                    pass
-                else:
-                    self.clicked[click_x][click_y] += 1
-                    self.counter += 1
-            return self.clicked
-
-
-
-
-        def is_mine(click_x, click_y):
-            '''Проверка на вшивость'''
-            cell = True
-            if button == "l":
-                if self.mines[click_x][click_y] == 1:
-                    cell = False
-                else:
-                    pass
-
-            return cell, self.neighbours[click_x][click_y]
-
-        cell, neigh = is_mine(click_x,click_y)
-
-
-        def flag_point(click_x, click_y):
-            '''Установка флага'''
-            if button == "r":
-                if self.clicked[click_x][click_y] == 0:
-                    self.flags[click_x][click_y] = 1
-            return self.flags
-
-        if self.side**2 - self.counter == self.mines_num:
-            end_of_game = True
-        else: 
-            end_of_game = False
-
-        return end_of_game, clicked_arr(click_x, click_y), cell, neigh, flag_point(click_x,click_y)
