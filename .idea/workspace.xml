@@ -3,16 +3,43 @@
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="9a90fa3f-4ee3-49f1-8928-8d2fcc58656f" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mechanic.py" beforeDir="false" afterPath="$PROJECT_DIR$/mechanic.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/miner.py" beforeDir="false" afterPath="$PROJECT_DIR$/miner.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sourse/img/flag" beforeDir="false" afterPath="$PROJECT_DIR$/sourse/img/flag.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/winconfig.py" beforeDir="false" afterPath="$PROJECT_DIR$/winconfig.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -87,34 +114,61 @@
     </task>
     <servers />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
   <component name="WindowStateProjectService">
-    <state width="1418" height="213" key="GridCell.Tab.0.bottom" timestamp="1603893320096">
-      <screen x="0" y="23" width="1440" height="823" />
+    <state width="1418" height="212" key="GridCell.Tab.0.bottom" timestamp="1604400045156">
+      <screen x="0" y="23" width="1440" height="826" />
     </state>
     <state width="1418" height="245" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1603537778164" />
-    <state width="1418" height="213" key="GridCell.Tab.0.bottom/0.23.1440.823@0.23.1440.823" timestamp="1603893320096" />
-    <state width="913" height="213" key="GridCell.Tab.0.bottom/0.23.1440.826@0.23.1440.826" timestamp="1603795331358" />
-    <state width="1418" height="213" key="GridCell.Tab.0.center" timestamp="1603893320096">
-      <screen x="0" y="23" width="1440" height="823" />
+    <state width="1418" height="212" key="GridCell.Tab.0.bottom/0.23.1440.823@0.23.1440.823" timestamp="1604271465301" />
+    <state width="1418" height="213" key="GridCell.Tab.0.bottom/0.23.1440.825@0.23.1440.825" timestamp="1603905937198" />
+    <state width="1418" height="212" key="GridCell.Tab.0.bottom/0.23.1440.826@0.23.1440.826" timestamp="1604400045156" />
+    <state width="1418" height="212" key="GridCell.Tab.0.bottom/0.23.1440.827@0.23.1440.827" timestamp="1604392668756" />
+    <state width="1418" height="212" key="GridCell.Tab.0.center" timestamp="1604400045155">
+      <screen x="0" y="23" width="1440" height="826" />
     </state>
     <state width="1418" height="245" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1603537778163" />
-    <state width="1418" height="213" key="GridCell.Tab.0.center/0.23.1440.823@0.23.1440.823" timestamp="1603893320096" />
-    <state width="913" height="213" key="GridCell.Tab.0.center/0.23.1440.826@0.23.1440.826" timestamp="1603795331356" />
-    <state width="1418" height="213" key="GridCell.Tab.0.left" timestamp="1603893320095">
-      <screen x="0" y="23" width="1440" height="823" />
+    <state width="1418" height="212" key="GridCell.Tab.0.center/0.23.1440.823@0.23.1440.823" timestamp="1604271465301" />
+    <state width="1418" height="213" key="GridCell.Tab.0.center/0.23.1440.825@0.23.1440.825" timestamp="1603905937197" />
+    <state width="1418" height="212" key="GridCell.Tab.0.center/0.23.1440.826@0.23.1440.826" timestamp="1604400045155" />
+    <state width="1418" height="212" key="GridCell.Tab.0.center/0.23.1440.827@0.23.1440.827" timestamp="1604392668755" />
+    <state width="1418" height="212" key="GridCell.Tab.0.left" timestamp="1604400045154">
+      <screen x="0" y="23" width="1440" height="826" />
     </state>
     <state width="1418" height="245" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1603537778162" />
-    <state width="1418" height="213" key="GridCell.Tab.0.left/0.23.1440.823@0.23.1440.823" timestamp="1603893320095" />
-    <state width="913" height="213" key="GridCell.Tab.0.left/0.23.1440.826@0.23.1440.826" timestamp="1603795331355" />
-    <state width="1418" height="213" key="GridCell.Tab.0.right" timestamp="1603893320096">
-      <screen x="0" y="23" width="1440" height="823" />
+    <state width="1418" height="212" key="GridCell.Tab.0.left/0.23.1440.823@0.23.1440.823" timestamp="1604271465300" />
+    <state width="1418" height="213" key="GridCell.Tab.0.left/0.23.1440.825@0.23.1440.825" timestamp="1603905937196" />
+    <state width="1418" height="212" key="GridCell.Tab.0.left/0.23.1440.826@0.23.1440.826" timestamp="1604400045154" />
+    <state width="1418" height="212" key="GridCell.Tab.0.left/0.23.1440.827@0.23.1440.827" timestamp="1604392668754" />
+    <state width="1418" height="212" key="GridCell.Tab.0.right" timestamp="1604400045155">
+      <screen x="0" y="23" width="1440" height="826" />
     </state>
     <state width="1418" height="245" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1603537778164" />
-    <state width="1418" height="213" key="GridCell.Tab.0.right/0.23.1440.823@0.23.1440.823" timestamp="1603893320096" />
-    <state width="913" height="213" key="GridCell.Tab.0.right/0.23.1440.826@0.23.1440.826" timestamp="1603795331357" />
-    <state x="100" y="100" width="1240" height="700" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1603371799657">
-      <screen x="0" y="0" width="1440" height="900" />
+    <state width="1418" height="212" key="GridCell.Tab.0.right/0.23.1440.823@0.23.1440.823" timestamp="1604271465301" />
+    <state width="1418" height="213" key="GridCell.Tab.0.right/0.23.1440.825@0.23.1440.825" timestamp="1603905937197" />
+    <state width="1418" height="212" key="GridCell.Tab.0.right/0.23.1440.826@0.23.1440.826" timestamp="1604400045155" />
+    <state width="1418" height="212" key="GridCell.Tab.0.right/0.23.1440.827@0.23.1440.827" timestamp="1604392668755" />
+    <state x="100" y="115" width="1240" height="644" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1604370695683">
+      <screen x="0" y="23" width="1440" height="827" />
     </state>
     <state x="100" y="100" width="1240" height="700" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1440.900@0.0.1440.900" timestamp="1603371799657" />
+    <state x="100" y="115" width="1240" height="644" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.23.1440.827@0.23.1440.827" timestamp="1604370695683" />
+    <state x="100" y="115" width="1240" height="644" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.23.1440.828@0.23.1440.828" timestamp="1604370100066" />
+    <state x="385" y="172" width="670" height="677" key="search.everywhere.popup" timestamp="1604396149212">
+      <screen x="0" y="23" width="1440" height="826" />
+    </state>
+    <state x="385" y="172" width="670" height="676" key="search.everywhere.popup/0.23.1440.825@0.23.1440.825" timestamp="1603901890948" />
+    <state x="385" y="172" width="670" height="677" key="search.everywhere.popup/0.23.1440.826@0.23.1440.826" timestamp="1604396149212" />
   </component>
 </project>

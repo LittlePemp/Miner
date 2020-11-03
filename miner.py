@@ -5,84 +5,146 @@ from PIL import ImageTk, Image
 import mechanic
 
 
-
 def timer(cfg):
 	""" Счет секунд """
 	ticks = pygame.time.get_ticks()
 	seconds = int((ticks - cfg.state_time) / 1000)
 	timer_time = 's: {seconds:03d}'.format(seconds=seconds)
-	
-	return timer_time 
+
+	return timer_time
 
 
-
-#Вставка таймера
+# Вставка таймера
 def get_timer(cfg):
 	timer_time = timer(cfg)
-	cfg.screen.fill((150, 150, 150)) # Цвет бэкграунда
-	cfg.timer_font.render_to(cfg.screen, 
-		(cfg.cell_size * cfg.cell_quantity - 120, cfg.head_hight / 2 + 10), 
-		timer_time, 
-		(18, 83, 255))
-
-
-	cfg.txt_font.render_to(cfg.screen, 
-		(15, cfg.head_hight / 2 + 10), 
-		"Space to restart", 
-		(150, 40, 40))
-	
+	cfg.screen.fill((150, 150, 150))  # Цвет бэкграунда
+	cfg.timer_font.render_to(cfg.screen,
+							 (cfg.cell_size * cfg.cell_quantity - 120, cfg.head_hight / 2 + 20),
+							 timer_time,
+							 (18, 83, 255))
 
 
 
-def game_field_drawing(cfg, pics, game_matrixes=None):
+def game_field_drawing(screen, cfg, pics, game_matrixes=None):
 	""" Заливка окна + наложение сетки """
 
 	for j in range(cfg.cell_quantity):
 		for i in range(cfg.cell_quantity):
 
-			if cfg.game_start:
-				cfg.screen.blit(
-					pics.cell_image, 
-					(i*cfg.cell_size, j*cfg.cell_size + cfg.head_hight))
-			
-			elif (game_matrixes.clicked[i][j]) == 0:
-				cfg.screen.blit(
-					pics.cell_image, 
-					(i*cfg.cell_size, j*cfg.cell_size + cfg.head_hight))
-			
-			elif game_matrixes.mines[i][j]:
-				cfg.screen.blit(
-					pics.mine_image, 
-					(i*cfg.cell_size, j*cfg.cell_size + cfg.head_hight))
+			cfg.txt_font.render_to(cfg.screen,
+								   (15, cfg.head_hight / 2 + 20),
+								   "flags:",
+								   (150, 40, 40))
 
-			elif ((game_matrixes.neighbours[i][j] > 0)):
-				cfg.screen.blit(
-					pics.digit_images_list[int(game_matrixes.neighbours[i][j])], 
-					(i*cfg.cell_size, j*cfg.cell_size + cfg.head_hight))
+			if cfg.game_start:
+				screen.blit(
+					pics.cell_image,
+					(i * cfg.cell_size, j * cfg.cell_size + cfg.head_hight))
+
+			elif (game_matrixes.clicked[i][j]) == 0:
+				screen.blit(
+					pics.cell_image,
+					(i * cfg.cell_size, j * cfg.cell_size + cfg.head_hight))
+
+				cfg.timer_font.render_to(cfg.screen,
+										 (85, cfg.head_hight / 2 + 20),
+										 str(game_matrixes.flag_count),
+										 (150, 40, 40))
+
+				if (game_matrixes.flags[i][j] == -1):
+					screen.blit(
+						pics.flag_image,
+						(i * cfg.cell_size + 0.15 * cfg.cell_size,
+						 j * cfg.cell_size + cfg.head_hight + 0.15 * cfg.cell_size))
+
+			elif game_matrixes.mines[i][j]:
+				screen.blit(
+					pics.mine_image,
+					(i * cfg.cell_size, j * cfg.cell_size + cfg.head_hight))
+
+			elif game_matrixes.neighbours[i][j] > 0:
+				screen.blit(
+					pics.digit_images_list[int(game_matrixes.neighbours[i][j])],
+					(i * cfg.cell_size, j * cfg.cell_size + cfg.head_hight))
+
+
+
 
 
 	for i in range(cfg.cell_quantity + 1):
-		
 		# Columns drawing
 		pygame.draw.line(
-			cfg.screen,
+			screen,
 			(0, 0, 0),
-			[0, cfg.cell_size*i + cfg.head_hight], 
-			[cfg.cell_size * cfg.cell_quantity, 
-				cfg.cell_size*i + cfg.head_hight], 
+			[0, cfg.cell_size * i + cfg.head_hight],
+			[cfg.cell_size * cfg.cell_quantity,
+			 cfg.cell_size * i + cfg.head_hight],
 			1)
 
 		# Rows drawing
 		pygame.draw.line(
-			cfg.screen, 
+			screen,
 			(0, 0, 0),
 
-			[cfg.cell_size*i, 
-				cfg.head_hight],
+			[cfg.cell_size * i,
+			 cfg.head_hight],
 
-			[cfg.cell_size*i, 
-				cfg.cell_size*cfg.cell_quantity + cfg.head_hight], 
+			[cfg.cell_size * i,
+			 cfg.cell_size * cfg.cell_quantity + cfg.head_hight],
 			1)
+
+
+
+
+
+def end_of_game(cfg, x, y, game_matrixes,pics):
+	if cfg.verdict == "Lose":
+
+		cfg.last_screen.fill((150, 150, 150))  # Цвет бэкграунда
+		cfg.timer_font.render_to(cfg.last_screen,
+								 (cfg.cell_size * cfg.cell_quantity - 120, cfg.head_hight / 2 + 20),
+								 str(cfg.verdict_time),
+								 (18, 83, 255))
+
+		cfg.txt_font.render_to(cfg.last_screen,
+							   (140, cfg.head_hight / 2 + 20),
+							   "Space to restart",
+							   (150, 40, 40))
+
+		cfg.txt_font.render_to(cfg.last_screen,
+							   (175, cfg.head_hight / 2 - 10),
+								"YOU LOSE",
+								(0, 200, 0))
+
+		pygame.draw.rect(cfg.last_screen, (200, 0, 0),
+						 (x * cfg.cell_size + 1, y * cfg.cell_size + cfg.head_hight + 1,
+						  cfg.cell_size - 1, cfg.cell_size - 1))
+
+
+		game_field_drawing(cfg.last_screen, cfg, pics, game_matrixes)
+
+
+
+
+
+
+	elif cfg.verdict == "Win":
+		cfg.last_screen.fill((150, 150, 150))  # Цвет бэкграунда
+		cfg.timer_font.render_to(cfg.last_screen,
+								 (cfg.cell_size * cfg.cell_quantity - 120, cfg.head_hight / 2 + 20),
+								 str(cfg.verdict_time),
+								 (18, 83, 255))
+
+		cfg.txt_font.render_to(cfg.last_screen,
+							   (140, cfg.head_hight / 2 + 20),
+							   "Space to restart",
+							   (150, 40, 40))
+
+		cfg.txt_font.render_to(cfg.last_screen,
+							   (175, cfg.head_hight / 2 - 10),
+							   "YOU LOSE",
+							   (0, 200, 0))
+		game_field_drawing(cfg.last_screen,cfg,pics,game_matrixes)
 
 
 
@@ -104,6 +166,7 @@ def screen_interaction(cfg):
 			# Нажатие на ячейку
 			if (event.type == pygame.MOUSEBUTTONUP):
 				x, y = (pygame.mouse.get_pos())
+				button = "l" if event.button == 1 else "r"
 
 				# Область игрового поля
 				if (y > cfg.head_hight):
@@ -114,20 +177,18 @@ def screen_interaction(cfg):
 					# Первый клик
 					if cfg.game_start:
 						cfg.game_start = False
-						
+
 						game_matrixes = mechanic.Mechanics(x, y, cfg.cell_quantity)
 
 					# Вызов фунции для обновления массива по кликам. Координата + left right button
 					else:
-						if event.button == 1:
-							game_matrixes.clicked_arr(x, y)
-						else:
-							game_matrixes.flag_point(x, y)
-
+						cfg.verdict = game_matrixes.game(x, y, button)
+						cfg.verdict_time = (pygame.time.get_ticks() - cfg.state_time) // 1000
+						cfg.verdict_time = 's: {seconds:03d}'.format(seconds=cfg.verdict_time)
 
 			# Выход из игры
 			if (event.type == pygame.KEYDOWN) or (event.type == pygame.QUIT):
-				
+
 				# Restart
 				if (event.key == pygame.K_SPACE):
 					cfg.round_restart()
@@ -136,22 +197,21 @@ def screen_interaction(cfg):
 				else:
 					game_running = False
 
-
-
 		# Зарисовка экрана с таймерм, если нет нажатий
 		if game_running:
 			get_timer(cfg)
 
 			# Зарисовка до генерации полей
 			if cfg.game_start:
-				game_field_drawing(cfg, pics)
+				game_field_drawing(cfg.screen, cfg, pics)
 
 			# Зарисовка после генерации полей
-			if cfg.game_start == False:	
-				game_field_drawing(cfg, pics, game_matrixes)
+			if cfg.game_start == False:
+				game_field_drawing(cfg.screen, cfg, pics, game_matrixes)
+
+				end_of_game(cfg, x, y, game_matrixes, pics)
 
 			pygame.display.flip()
-
 
 
 def game_loop():
@@ -166,9 +226,6 @@ def main():
 	screen_interaction(cfg)
 
 
-
-
 if __name__ == '__main__':
 	main()
-
 
